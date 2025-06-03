@@ -1,4 +1,4 @@
-This repo helps to create kubeflow servvices via [Argocd](https://github.com/argoproj/argo-helm) and flow from [TheCodingSheikh](https://github.com/TheCodingSheikh/helm-charts/releases/tag/kubeflow-1.0.4)
+This repo helps to create kubeflow servvices via [Argocd](https://github.com/argoproj/argo-helm) and flow from [TheCodingSheikh](https://github.com/TheCodingSheikh/helm-charts/releases/tag/kubeflow-1.0.4) with adoption kubeflow to v1.9.1 with dex-and-kind auth
 
 To create App in Argocd (must be [preinstalled](https://github.com/argoproj/argo-helm), and configured to access from argocd cli), not use UI, only apply from src
 Multi source app, with values from [git]([url](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository))
