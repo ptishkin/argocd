@@ -2,3 +2,21 @@ To create App in argocd, not use UI, only apply from src
 Multi source app, with values from [git]([url](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository))
 
 `argocd app create kubeflow-1.0.4-v1.9.1 --file https://raw.githubusercontent.com/ptishkin/argocd/refs/heads/kubeflow-1.0.4-v1.9.1/TheCodingSheikh/charts/kubeflow/multi-src.yaml`
+
+if use **rke** from rancher, need some changes in setup (`rancher-cluster.yml`)
+- need to open [anonymous auth]([url](https://github.com/rancher/rancher/issues/36444#issuecomment-1113256008))
+- and add (not replace) service-account-issuer from `rke` to `https://kubernetes.default.svc.cluster.local`
+
+add this params to your rke cluster config
+```yaml
+services:
+  kube-api:
+    extra_args:
+      anonymous-auth: true
+      service-account-issuer: https://kubernetes.default.svc.cluster.local
+    extra_args_array:
+      service-account-issuer:
+        - "rke"
+```
+`extra_args_array` required to use both `rke` and new `https://kubernetes.default.svc.cluster.local` issuers for old and new tokens
+If ignore old `rke` issuer, kuber fail to use many more internal tokens and as result cluster is not managed (but after revert old issuer is ok)
