@@ -3,11 +3,11 @@ Multi source app, with values from [git]([url](https://argo-cd.readthedocs.io/en
 
 `argocd app create kubeflow-1.0.4-v1.9.1 --file https://raw.githubusercontent.com/ptishkin/argocd/refs/heads/kubeflow-1.0.4-v1.9.1/TheCodingSheikh/charts/kubeflow/multi-src.yaml`
 
-I use `dex-and-kind` overlay ([see](https://github.com/kubeflow/manifests/pull/2864), to use both istio external and internal network:
+I use `dex-and-kind` overlay ([see](https://github.com/kubeflow/manifests/pull/2864), to use both istio external and internal network (with internal (dex) and exteranl (kube) auth):
 - To extend internal to external kserve need change ConfigMap
 `kubectl -n knative-serving edit configmap config-domain` and add empty key `yourbasedomain.com: ''`
 after that kserve add routes like `http://kserver-endpoint.kubeflow-user-example-com.yourbasedomain.com`
-- for external internal (dex) and exteranl (kube) auth, to work with need to create token
+- external auth/net need to use kube token
   ```
   #get generated kserve routes
   kubectl get routes -n kubeflow-user-example-com
