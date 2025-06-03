@@ -18,7 +18,7 @@ after that kserve add routes like `http://kserver-endpoint.kubeflow-user-example
   ```
 
 if use **rke** from rancher, need some changes in setup (`rancher-cluster.yml`)
-- need to open [anonymous auth]([url](https://github.com/rancher/rancher/issues/36444#issuecomment-1113256008))
+- need to open [anonymous auth](https://github.com/rancher/rancher/issues/36444#issuecomment-1113256008)
 - and add (not replace) service-account-issuer from `rke` to `https://kubernetes.default.svc.cluster.local`
 
 add this params to your rke cluster config
