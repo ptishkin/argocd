@@ -7,4 +7,5 @@ resources.istioResources.path: common/istio-1-22/kubeflow-istio-resources/base
 resources.certManagerBase.path: common/cert-manager/cert-manager/base
 resources.kserve.path: contrib/kserve/kserve
 resources.kserveModelsWebApp.path: contrib/kserve/models-web-app/overlays/kubeflow
+#use local dex + external (kuber) tokens, see https://github.com/kubeflow/manifests/pull/2864
 resources.oauth2Proxy.path: common/oauth2-proxy/overlays/m2m-dex-and-kind
