@@ -20,6 +20,6 @@ spec:
         valueFiles:
         - $values/TheCodingSheikh/charts/kubeflow/values.yaml
     # Values from Git
-    - repoURL: 'https://github.com/ptishkin/argocd.git'
+    - repoURL: 'https://github.com/ptishkin/kubeflow-argocd.git'
       targetRevision: kubeflow-1.0.4-v1.9.1
       ref: values
