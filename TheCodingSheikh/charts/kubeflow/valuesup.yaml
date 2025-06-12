@@ -36,3 +36,13 @@ resources:
                 - '--console-address'
                 - ':9001'
                 - /data
+        # apply fix https://github.com/kubeflow/pipelines/pull/11403/commits/e94d260da967d1e781b35bd076e1c61450d7b0bb
+        - target:
+            kind: Deployment
+            name: ml-pipeline-ui
+          patch: |-
+            - op: merge
+              path: /spec/template/spec/containers/0/env
+              value:
+                - name: DISABLE_GKE_METADATA
+                  value: 'true'
