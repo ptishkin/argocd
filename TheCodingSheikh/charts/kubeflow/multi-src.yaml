@@ -18,7 +18,7 @@ spec:
       targetRevision: kubeflow-1.0.4
       helm:
         valueFiles:
-        - $upvalues/TheCodingSheikh/charts/kubeflow/values.yaml
+        - $upvalues/TheCodingSheikh/charts/kubeflow/valuesup.yaml
     # Values from Git
     - repoURL: 'https://github.com/ptishkin/kubeflow-argocd.git'
       targetRevision: kubeflow-1.0.4-v1.9.1
