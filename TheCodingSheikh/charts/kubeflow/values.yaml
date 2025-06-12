@@ -9,4 +9,14 @@ resources:
   kserve.path: contrib/kserve/kserve
   kserveModelsWebApp.path: contrib/kserve/models-web-app/overlays/kubeflow
   #use local dex + external (kuber) tokens, see https://github.com/kubeflow/manifests/pull/2864
-  oauth2Proxy.path: common/oauth2-proxy/overlays/m2m-dex-and-kindx
+  oauth2Proxy.path: common/oauth2-proxy/overlays/m2m-dex-and-kind
+  kubeflow-pipelines:
+    kustomize:
+      patches:
+        - target:
+            kind: Deployment
+            name: minio
+          patch: |-
+            - op: replace
+              path: /spec/template/spec/containers/0/image
+              value: quay.io/minio/minio:RELEASE.2021-12-29T06-49-06Z
