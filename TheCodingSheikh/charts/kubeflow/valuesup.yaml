@@ -18,7 +18,7 @@ resources:
     path: contrib/kserve/models-web-app/overlays/kubeflow
   #use local dex + external (kuber) tokens, see https://github.com/kubeflow/manifests/pull/2864
   oauth2Proxy:
-    path: common/oauth2-proxy/overlays/m2m-dex-and-kind
+    path: common/oauth2-proxy/overlays/m2m-dex-and-kindx
   kubeflow-pipelines:
     kustomize:
       patches:
