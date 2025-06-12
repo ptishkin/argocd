@@ -18,14 +18,9 @@ resources:
           name: minio
         patch: |-
           - op: replace
+            path: /spec/template/spec/containers/0/args
             value: |
-              spec:
-                template:
-                  spec:
-                    containers:
-                      - args:
-                          - server
-                          - '--console-address'
-                          - ':9001'
-                          - /data
-                        image: quay.io/minio/minio:RELEASE.2021-12-29T06-49-06Z
+              - server
+              - '--console-address'
+              - ':9001'
+              - /data
