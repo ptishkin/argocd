@@ -31,7 +31,7 @@ resources:
           patch: |-
             - op: replace
               path: /spec/template/spec/containers/0/args
-              value: |
+              value:
                 - server
                 - '--console-address'
                 - ':9001'
