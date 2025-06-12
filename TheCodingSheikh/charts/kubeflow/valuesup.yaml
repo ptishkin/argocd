@@ -42,7 +42,7 @@ resources:
             name: ml-pipeline-ui
           patch: |-
             - op: add
-              path: /spec/template/spec/containers/0/env
+              path: /spec/template/spec/containers/0/envx
               value:
                 - name: DISABLE_GKE_METADATA
                   value: 'true'
