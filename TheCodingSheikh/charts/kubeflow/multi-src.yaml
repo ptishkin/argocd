@@ -15,6 +15,7 @@ spec:
     # Chart from Chart Repo
     - repoURL: https://github.com/TheCodingSheikh/helm-charts.git
       path: charts/kubeflow
+      name: thecodingsheikh
       targetRevision: kubeflow-1.0.4
       helm:
         valueFiles:
@@ -22,4 +23,5 @@ spec:
     # Values from Git
     - repoURL: 'https://github.com/ptishkin/kubeflow-argocd.git'
       targetRevision: kubeflow-1.0.4-v1.9.1
+      name: custom
       ref: upvalues
