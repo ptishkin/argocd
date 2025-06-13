@@ -59,9 +59,6 @@ raw:
       namespace: kubeflow-user-example-com
       name: access-ml-pipeline
       spec:
-        metadata:
-          name: access-ml-pipeline
-          namespace: kubeflow-user-example-com
         spec:
           desc: Allow access to Kubeflow Pipelines
           env:
