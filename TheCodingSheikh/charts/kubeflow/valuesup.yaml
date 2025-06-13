@@ -52,70 +52,69 @@ resources:
                         value: 'true'
 raw:
   resources:
-    pipelines:
-      - >-
-        # add default minio secret for tensorboard, notebook
-        apiVersion: kubeflow.org/v1alpha1
-        kind: PodDefault
+    add-minio-secret:
+      # add default minio secret for tensorboard, notebook
+      apiVersion: kubeflow.org/v1alpha1
+      kind: PodDefault
+      metadata:
+        name: add-minio-secret
+        namespace: kubeflow-user-example-com
+      spec:
+        desc: add minio credential
+        env:
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                key: accesskey
+                name: mlpipeline-minio-artifact
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                key: secretkey
+                name: mlpipeline-minio-artifact
+          - name: S3_ENDPOINT
+            valueFrom:
+              secretKeyRef:
+                key: endpoint
+                name: mlpipeline-minio-artifact
+          - name: S3_USE_HTTPS
+            valueFrom:
+              secretKeyRef:
+                key: usehttps
+                name: mlpipeline-minio-artifact
+          - name: S3_VERIFY_SSL
+            valueFrom:
+              secretKeyRef:
+                key: verifyssl
+                name: mlpipeline-minio-artifact
+        selector:
+          matchLabels:
+            access-tb: 'true'
+    access-ml-pipeline:
+      # add default sa to connect notebook with pipelines
+      apiVersion: kubeflow.org/v1alpha1
+      kind: PodDefault
+      spec:
         metadata:
-          name: add-minio-secret
+          name: access-ml-pipeline
           namespace: kubeflow-user-example-com
         spec:
-          desc: add minio credential
+          desc: Allow access to Kubeflow Pipelines
           env:
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  key: accesskey
-                  name: mlpipeline-minio-artifact
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  key: secretkey
-                  name: mlpipeline-minio-artifact
-            - name: S3_ENDPOINT
-              valueFrom:
-                secretKeyRef:
-                  key: endpoint
-                  name: mlpipeline-minio-artifact
-            - name: S3_USE_HTTPS
-              valueFrom:
-                secretKeyRef:
-                  key: usehttps
-                  name: mlpipeline-minio-artifact
-            - name: S3_VERIFY_SSL
-              valueFrom:
-                secretKeyRef:
-                  key: verifyssl
-                  name: mlpipeline-minio-artifact
+            - name: KF_PIPELINES_SA_TOKEN_PATH
+              value: /var/run/secrets/kubeflow/pipelines/token
           selector:
             matchLabels:
-              access-tb: 'true'
-      - >-
-        # add default sa to connect notebook with pipelines
-        apiVersion: kubeflow.org/v1alpha1
-        kind: PodDefault
-        spec:
-          metadata:
-            name: access-ml-pipeline
-            namespace: kubeflow-user-example-com
-          spec:
-            desc: Allow access to Kubeflow Pipelines
-            env:
-              - name: KF_PIPELINES_SA_TOKEN_PATH
-                value: /var/run/secrets/kubeflow/pipelines/token
-            selector:
-              matchLabels:
-                access-ml-pipeline: 'true'
-            volumeMounts:
-              - mountPath: /var/run/secrets/kubeflow/pipelines
-                name: volume-kf-pipeline-token
-                readOnly: true
-            volumes:
-              - name: volume-kf-pipeline-token
-                projected:
-                  sources:
-                    - serviceAccountToken:
-                        audience: pipelines.kubeflow.org
-                        expirationSeconds: 7200
-                        path: token
+              access-ml-pipeline: 'true'
+          volumeMounts:
+            - mountPath: /var/run/secrets/kubeflow/pipelines
+              name: volume-kf-pipeline-token
+              readOnly: true
+          volumes:
+            - name: volume-kf-pipeline-token
+              projected:
+                sources:
+                  - serviceAccountToken:
+                      audience: pipelines.kubeflow.org
+                      expirationSeconds: 7200
+                      path: token
