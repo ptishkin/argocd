@@ -47,5 +47,5 @@ resources:
                 spec:
                   containers:
                     - env:
-                      - name: DISABLE_GKE_METADATA
-                        value: 'true'
+                        - name: DISABLE_GKE_METADATA
+                          value: 'true'
