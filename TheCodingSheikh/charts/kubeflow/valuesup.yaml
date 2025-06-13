@@ -37,15 +37,15 @@ resources:
                 - ':9001'
                 - /data
         # apply fix https://github.com/kubeflow/pipelines/pull/11403/commits/e94d260da967d1e781b35bd076e1c61450d7b0bb
-        - |-
-          apiVersion: apps/v1
-          kind: Deployment
-          metadata:
-            name: ml-pipeline-ui
-          spec:
-            template:
-              spec:
-                containers:
-                - env:
-                  - name: DISABLE_GKE_METADATA
-                    value: 'true'
+        - path: |-
+            apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: ml-pipeline-ui
+            spec:
+              template:
+                spec:
+                  containers:
+                  - env:
+                    - name: DISABLE_GKE_METADATA
+                      value: 'true'
