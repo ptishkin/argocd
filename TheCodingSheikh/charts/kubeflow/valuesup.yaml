@@ -56,9 +56,10 @@ raw:
       # add default sa to connect notebook with pipelines
       apiVersion: kubeflow.org/v1alpha1
       kind: PodDefault
-      namespace: kubeflow-user-example-com
-      name: access-ml-pipeline
       spec:
+        metadata:
+          name: access-ml-pipeline
+          namespace: kubeflow-user-example-com
         spec:
           desc: Allow access to Kubeflow Pipelines
           env:
