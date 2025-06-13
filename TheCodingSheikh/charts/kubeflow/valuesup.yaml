@@ -255,7 +255,7 @@ raw:
       kind: Service
       spec:
         metadata:
-          name: tcp-minio-service
+          name: tcp-minio-console-service
           namespace: kubeflow
         spec:
           internalTrafficPolicy: Cluster
