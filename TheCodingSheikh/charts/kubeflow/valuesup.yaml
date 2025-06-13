@@ -63,7 +63,7 @@ raw:
           name: add-minio-secret
           namespace: kubeflow-user-example-com
         spec:
-          desc: add minio credential
+          desc: TensorBoard minio access (add-minio-secret)
           env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
@@ -93,6 +93,7 @@ raw:
           selector:
             matchLabels:
               access-tb: 'true'
+
     access-ml-pipeline:
       # add default sa to connect notebook with pipelines
       apiVersion: kubeflow.org/v1alpha1
@@ -102,7 +103,7 @@ raw:
           name: access-ml-pipeline
           namespace: kubeflow-user-example-com
         spec:
-          desc: Allow access to Kubeflow Pipelines
+          desc: Notebook allow access to Kubeflow Pipelines (access-ml-pipeline)
           env:
             - name: KF_PIPELINES_SA_TOKEN_PATH
               value: /var/run/secrets/kubeflow/pipelines/token
