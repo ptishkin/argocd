@@ -46,6 +46,7 @@ resources:
               template:
                 spec:
                   containers:
-                    - env:
-                        - name: DISABLE_GKE_METADATA
-                          value: 'true'
+                  - name: ml-pipeline-ui
+                    env:
+                      - name: DISABLE_GKE_METADATA
+                        value: 'true'
