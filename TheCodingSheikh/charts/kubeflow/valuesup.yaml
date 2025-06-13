@@ -21,10 +21,12 @@ resources:
     path: common/oauth2-proxy/overlays/m2m-dex-and-kind
   pipelines:
     kustomize:
+      # replace old minio (on 2019 - memory leaks on ubuntu 22.04)
       images:
         - >-
           gcr.io/ml-pipeline/minio=quay.io/minio/minio:RELEASE.2021-12-29T06-49-06Z
       patches:
+        # open console port (web ui)
         - target:
             kind: Deployment
             name: minio
@@ -119,3 +121,154 @@ raw:
                       audience: pipelines.kubeflow.org
                       expirationSeconds: 7200
                       path: token
+
+    tcp-gateway-service:
+      apiVersion: v1
+      kind: Service
+      spec:
+        metadata:
+          name: tcp-gateway-service
+          namespace: istio-system
+        spec:
+          internalTrafficPolicy: Cluster
+          ipFamilies:
+            - IPv4
+          ipFamilyPolicy: SingleStack
+          ports:
+            - name: http2
+              port: 80
+              protocol: TCP
+              targetPort: 9001
+            - name: tcp-minio
+              port: 9002
+              protocol: TCP
+              targetPort: 9002
+            - name: tcp-mysql
+              port: 3306
+              protocol: TCP
+              targetPort: 3306
+          selector:
+            app: cluster-local-gateway
+            istio: cluster-local-gateway
+          sessionAffinity: None
+          type: ClusterIP
+
+    http-gateway:
+      #open minio access without dex into console port via istio
+      apiVersion: networking.istio.io/v1
+      kind: Gateway
+      spec:
+        metadata:
+          name: http-gateway
+          namespace: kubeflow
+        spec:
+          selector:
+            app: cluster-local-gateway
+            istio: cluster-local-gateway
+          servers:
+            - hosts:
+                - '*'
+              port:
+                name: http
+                number: 9001
+                protocol: HTTP
+
+    http-minio-vservice:
+      apiVersion: networking.istio.io/v1
+      kind: VirtualService
+      spec:
+        metadata:
+          name: http-minio-vservice
+          namespace: kubeflow
+        spec:
+          gateways:
+            - http-gateway
+          hosts:
+            - '*'
+          http:
+            - route:
+                - destination:
+                    host: tcp-minio-console-service.kubeflow.svc.cluster.local
+                    port:
+                      number: 9001
+              timeout: 300s
+
+    tcp-gateway:
+      apiVersion: networking.istio.io/v1
+      kind: Gateway
+      spec:
+        metadata:
+          name: tcp-gateway
+          namespace: kubeflow
+        spec:
+          selector:
+            app: cluster-local-gateway
+            istio: cluster-local-gateway
+          servers:
+            - hosts:
+                - '*'
+              port:
+                name: tcp-vservice-minio
+                number: 9002
+                protocol: TCP
+            - hosts:
+                - '*'
+              port:
+                name: tcp-vservice-mysql
+                number: 3306
+                protocol: TCP
+
+    tcp-vservice:
+      apiVersion: networking.istio.io/v1
+      kind: VirtualService
+      spec:
+        metadata:
+          name: tcp-vservice
+          namespace: kubeflow
+        spec:
+          gateways:
+            - tcp-gateway
+          hosts:
+            - '*'
+          tcp:
+            - match:
+                - port: 3306
+              route:
+                - destination:
+                    host: mysql.kubeflow.svc.cluster.local
+                    port:
+                      number: 3306
+            - match:
+                - port: 9002
+              route:
+                - destination:
+                    host: tcp-minio-console-service.kubeflow.svc.cluster.local
+                    port:
+                      number: 9001
+
+    tcp-minio-console-service:
+      #open new port for 2021 minio build, via tcp-gateway-service:80,9002 =>
+      # [cluster-local-gateway:9001 => http-gateway:9001 => http-minio-vservice:9001]
+      # [cluster-local-gateway:9002 => tcp-gateway:9002 => tcp-vservice:9002]
+      # => tcp-minio-console-service:9001
+      apiVersion: v1
+      kind: Service
+      spec:
+        metadata:
+          name: tcp-minio-service
+          namespace: kubeflow
+        spec:
+          internalTrafficPolicy: Cluster
+          ipFamilies:
+            - IPv4
+          ipFamilyPolicy: SingleStack
+          ports:
+            - name: 9001tcp
+              port: 9001
+              protocol: TCP
+              targetPort: 9001
+          selector:
+            app: minio
+            application-crd-id: kubeflow-pipelines
+          sessionAffinity: None
+          type: ClusterIP
