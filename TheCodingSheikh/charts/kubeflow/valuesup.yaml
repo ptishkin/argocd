@@ -52,15 +52,43 @@ resources:
                     env:
                       - name: DISABLE_GKE_METADATA
                         value: 'true'
+        #add default kserve sa secret
+        - patch: |-
+            apiVersion: v1
+            kind: Secret
+            metadata:
+              annotations:
+                serving.kserve.io/s3-endpoint: minio-service.kubeflow:9000
+                serving.kserve.io/s3-useanoncredential: 'false'
+                serving.kserve.io/s3-usehttps: '0'
+              name: mlpipeline-minio-artifact
+            data:
+              AWS_ACCESS_KEY_ID: minio
+              AWS_SECRET_ACCESS_KEY: minio123
+              S3_ENDPOINT: minio-service.kubeflow:9000
+              S3_USE_HTTPS: 'false'
+              S3_VERIFY_SSL: '0'
+
 raw:
   resources:
-    add-minio-secret:
+    minio-kserve-sa:
+      #add sa for https://kserve.github.io/website/0.8/sdk_docs/docs/V1beta1PredictorSpec/#properties service_account_name
+      apiVersion: v1
+      kind: ServiceAccount
+      spec:
+        metadata:
+          name: minio-kserve-sa
+          namespace: kubeflow-user-example-com
+        secrets:
+          - name: mlpipeline-minio-artifact
+
+    minio-tensorboard-access:
       # add default minio secret for tensorboard, notebook
       apiVersion: kubeflow.org/v1alpha1
       kind: PodDefault
       spec:
         metadata:
-          name: add-minio-secret
+          name: tensorboard-minio-access
           namespace: kubeflow-user-example-com
         spec:
           desc: TensorBoard minio access (add-minio-secret)
@@ -68,48 +96,45 @@ raw:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  key: accesskey
+                  key: AWS_ACCESS_KEY_ID
                   name: mlpipeline-minio-artifact
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  key: secretkey
+                  key: AWS_SECRET_ACCESS_KEY
                   name: mlpipeline-minio-artifact
             - name: S3_ENDPOINT
               valueFrom:
                 secretKeyRef:
-                  key: endpoint
+                  key: S3_ENDPOINT
                   name: mlpipeline-minio-artifact
             - name: S3_USE_HTTPS
               valueFrom:
                 secretKeyRef:
-                  key: usehttps
+                  key: S3_USE_HTTPS
                   name: mlpipeline-minio-artifact
             - name: S3_VERIFY_SSL
               valueFrom:
                 secretKeyRef:
-                  key: verifyssl
+                  key: S3_VERIFY_SSL
                   name: mlpipeline-minio-artifact
           selector:
             matchLabels:
-              access-tb: 'true'
+              minio-tensorboard-access: 'true'
 
-    access-ml-pipeline:
+    minio-mlpipeline-access:
       # add default sa to connect notebook with pipelines
       apiVersion: kubeflow.org/v1alpha1
       kind: PodDefault
       spec:
         metadata:
-          name: access-ml-pipeline
+          name: minio-mlpipeline-access
           namespace: kubeflow-user-example-com
         spec:
           desc: Notebook allow access to Kubeflow Pipelines (access-ml-pipeline)
           env:
             - name: KF_PIPELINES_SA_TOKEN_PATH
               value: /var/run/secrets/kubeflow/pipelines/token
-          selector:
-            matchLabels:
-              access-ml-pipeline: 'true'
           volumeMounts:
             - mountPath: /var/run/secrets/kubeflow/pipelines
               name: volume-kf-pipeline-token
@@ -122,6 +147,9 @@ raw:
                       audience: pipelines.kubeflow.org
                       expirationSeconds: 7200
                       path: token
+          selector:
+            matchLabels:
+              minio-mlpipeline-access: 'true'
 
     tcp-gateway-service:
       apiVersion: v1
