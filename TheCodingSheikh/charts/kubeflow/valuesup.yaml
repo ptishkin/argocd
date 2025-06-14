@@ -63,11 +63,11 @@ resources:
                 serving.kserve.io/s3-usehttps: '0'
               name: mlpipeline-minio-artifact
             data:
-              AWS_ACCESS_KEY_ID: minio
-              AWS_SECRET_ACCESS_KEY: minio123
-              S3_ENDPOINT: minio-service.kubeflow:9000
-              S3_USE_HTTPS: 'false'
-              S3_VERIFY_SSL: '0'
+              AWS_ACCESS_KEY_ID: bWluaW8K
+              AWS_SECRET_ACCESS_KEY: bWluaW8xMjMK
+              S3_ENDPOINT: bWluaW8tc2VydmljZS5rdWJlZmxvdzo5MDAwCg==
+              S3_USE_HTTPS: ZmFsc2UK
+              S3_VERIFY_SSL: MAo
 
 raw:
   resources:
