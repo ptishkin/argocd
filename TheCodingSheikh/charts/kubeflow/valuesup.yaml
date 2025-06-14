@@ -52,25 +52,27 @@ resources:
                     env:
                       - name: DISABLE_GKE_METADATA
                         value: 'true'
-        #add default kserve sa secret
-        - patch: |-
-            apiVersion: v1
-            data:
-              AWS_ACCESS_KEY_ID: bWluaW8=
-              AWS_SECRET_ACCESS_KEY: bWluaW8xMjM=
-              S3_ENDPOINT: bWluaW8tc2VydmljZS5rdWJlZmxvdzo5MDAw
-              S3_USE_HTTPS: MA==
-              S3_VERIFY_SSL: MQ==
-            kind: Secret
-            metadata:
-              annotations:
-                serving.kserve.io/s3-endpoint: minio-service.kubeflow:9000
-                serving.kserve.io/s3-useanoncredential: 'false'
-                serving.kserve.io/s3-usehttps: '0'
-              name: mlpipeline-minio-artifact
 
 raw:
   resources:
+    minio-kserve-tensorboard-secret:
+      #redefine default secret for kserve / tensorboard minio access
+      apiVersion: v1
+      kind: Secret
+      spec:
+        metadata:
+          name: minio-kserve-tensorboard-secret
+          annotations:
+            serving.kserve.io/s3-endpoint: minio-service.kubeflow:9000
+            serving.kserve.io/s3-useanoncredential: 'false'
+            serving.kserve.io/s3-usehttps: '0'
+        data:
+          AWS_ACCESS_KEY_ID: bWluaW8=
+          AWS_SECRET_ACCESS_KEY: bWluaW8xMjM=
+          S3_ENDPOINT: bWluaW8tc2VydmljZS5rdWJlZmxvdzo5MDAw
+          S3_USE_HTTPS: MA==
+          S3_VERIFY_SSL: MQ==
+
     minio-kserve-sa:
       #add sa for https://kserve.github.io/website/0.8/sdk_docs/docs/V1beta1PredictorSpec/#properties service_account_name
       apiVersion: v1
@@ -80,10 +82,10 @@ raw:
           name: minio-kserve-sa
           namespace: kubeflow-user-example-com
         secrets:
-          - name: mlpipeline-minio-artifact
+          - name: minio-kserve-tensorboard-secret
 
     minio-tensorboard-access:
-      # add default minio secret for tensorboard, notebook
+      # add minio access for tensorboard
       apiVersion: kubeflow.org/v1alpha1
       kind: PodDefault
       spec:
@@ -97,27 +99,27 @@ raw:
               valueFrom:
                 secretKeyRef:
                   key: AWS_ACCESS_KEY_ID
-                  name: mlpipeline-minio-artifact
+                  name: minio-kserve-tensorboard-secret
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
                   key: AWS_SECRET_ACCESS_KEY
-                  name: mlpipeline-minio-artifact
+                  name: minio-kserve-tensorboard-secret
             - name: S3_ENDPOINT
               valueFrom:
                 secretKeyRef:
                   key: S3_ENDPOINT
-                  name: mlpipeline-minio-artifact
+                  name: minio-kserve-tensorboard-secret
             - name: S3_USE_HTTPS
               valueFrom:
                 secretKeyRef:
                   key: S3_USE_HTTPS
-                  name: mlpipeline-minio-artifact
+                  name: minio-kserve-tensorboard-secret
             - name: S3_VERIFY_SSL
               valueFrom:
                 secretKeyRef:
                   key: S3_VERIFY_SSL
-                  name: mlpipeline-minio-artifact
+                  name: minio-kserve-tensorboard-secret
           selector:
             matchLabels:
               minio-tensorboard-access: 'true'
