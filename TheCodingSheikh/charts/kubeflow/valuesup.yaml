@@ -55,6 +55,12 @@ resources:
         #add default kserve sa secret
         - patch: |-
             apiVersion: v1
+            data:
+              AWS_ACCESS_KEY_ID: bWluaW8=
+              AWS_SECRET_ACCESS_KEY: bWluaW8xMjM=
+              S3_ENDPOINT: bWluaW8tc2VydmljZS5rdWJlZmxvdzo5MDAw
+              S3_USE_HTTPS: MA==
+              S3_VERIFY_SSL: MQ==
             kind: Secret
             metadata:
               annotations:
@@ -62,12 +68,6 @@ resources:
                 serving.kserve.io/s3-useanoncredential: 'false'
                 serving.kserve.io/s3-usehttps: '0'
               name: mlpipeline-minio-artifact
-            data:
-              AWS_ACCESS_KEY_ID: bWluaW8K
-              AWS_SECRET_ACCESS_KEY: bWluaW8xMjMK
-              S3_ENDPOINT: bWluaW8tc2VydmljZS5rdWJlZmxvdzo5MDAwCg==
-              S3_USE_HTTPS: ZmFsc2UK
-              S3_VERIFY_SSL: MAo
 
 raw:
   resources:
