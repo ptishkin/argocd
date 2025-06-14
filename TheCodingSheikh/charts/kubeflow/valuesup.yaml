@@ -62,6 +62,7 @@ raw:
       spec:
         metadata:
           name: minio-kserve-tensorboard-secret
+          namespace: kubeflow-user-example-com
           annotations:
             serving.kserve.io/s3-endpoint: minio-service.kubeflow:9000
             serving.kserve.io/s3-useanoncredential: 'false'
