@@ -14,6 +14,11 @@ resources:
     path: common/cert-manager/cert-manager/base
   kserve:
     path: contrib/kserve/kserve
+    kustomize:
+      # replace old tensorflow
+      images:
+        - >-
+          tensorflow/serving=tensorflow/serving:2.15.1
   kserveModelsWebApp:
     path: contrib/kserve/models-web-app/overlays/kubeflow
   #use local dex + external (kuber) tokens, see https://github.com/kubeflow/manifests/pull/2864
