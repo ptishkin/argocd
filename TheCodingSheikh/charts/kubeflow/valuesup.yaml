@@ -89,6 +89,7 @@ raw:
             serving.kserve.io/s3-useanoncredential: 'false'
             serving.kserve.io/s3-usehttps: '0'
             serving.kserve.io/s3-region: 'minio'
+            serving.kserve.io/s3-usevirtualbucket: "false"
         data:
           AWS_ACCESS_KEY_ID: bWluaW8=
           AWS_SECRET_ACCESS_KEY: bWluaW8xMjM=
