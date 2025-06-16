@@ -88,12 +88,14 @@ raw:
             serving.kserve.io/s3-endpoint: minio-service.kubeflow:9000
             serving.kserve.io/s3-useanoncredential: 'false'
             serving.kserve.io/s3-usehttps: '0'
+            serving.kserve.io/s3-region: 'minio'
         data:
           AWS_ACCESS_KEY_ID: bWluaW8=
           AWS_SECRET_ACCESS_KEY: bWluaW8xMjM=
           S3_ENDPOINT: bWluaW8tc2VydmljZS5rdWJlZmxvdzo5MDAw
           S3_USE_HTTPS: MA==
           S3_VERIFY_SSL: MQ==
+          S3_REGION: bWluaW8=
 
     minio-kserve-sa:
       #add sa for https://kserve.github.io/website/0.8/sdk_docs/docs/V1beta1PredictorSpec/#properties service_account_name
