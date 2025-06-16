@@ -12,6 +12,21 @@ resources:
     path: common/istio-1-22/kubeflow-istio-resources/base
   certManagerBase:
     path: common/cert-manager/cert-manager/base
+  knativeServing:
+    kustomize:
+      patches:
+        # setup clean old revisions
+        - target:
+            kind: ConfigMap
+            name: config-gc
+          patch: |-
+            - op: replace
+              path: /data
+              value:
+                max-non-active-revisions: '0'
+                min-non-active-revisions: '0'
+                retain-since-create-time: disabled
+                retain-since-last-active-time: disabled
   kserve:
     path: contrib/kserve/kserve
     kustomize:
@@ -19,19 +34,6 @@ resources:
       images:
         - >-
           tensorflow/serving=tensorflow/serving:2.15.1
-      patches:
-        # setup clean old revisions
-        - target:
-            kind: ConfigMap
-            name: config-gc
-          patch: |-
-            - op: add
-              path: /data
-              value:
-                max-non-active-revisions: '0'
-                min-non-active-revisions: '0'
-                retain-since-create-time: disabled
-                retain-since-last-active-time: disabled
 
   kserveModelsWebApp:
     path: contrib/kserve/models-web-app/overlays/kubeflow
