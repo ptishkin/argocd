@@ -25,7 +25,7 @@ resources:
             kind: ConfigMap
             name: config-gc
           patch: |-
-            - op: replace
+            - op: add
               path: /data
               value:
                 max-non-active-revisions: '0'
