@@ -19,6 +19,20 @@ resources:
       images:
         - >-
           tensorflow/serving=tensorflow/serving:2.15.1
+      patches:
+        # setup clean old revisions
+        - target:
+            kind: ConfigMap
+            name: config-gc
+          patch: |-
+            - op: replace
+              path: /data
+              value:
+                max-non-active-revisions: '0'
+                min-non-active-revisions: '0'
+                retain-since-create-time: disabled
+                retain-since-last-active-time: disabled
+
   kserveModelsWebApp:
     path: contrib/kserve/models-web-app/overlays/kubeflow
   #use local dex + external (kuber) tokens, see https://github.com/kubeflow/manifests/pull/2864
