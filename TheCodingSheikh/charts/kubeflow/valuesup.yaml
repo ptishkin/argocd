@@ -31,9 +31,10 @@ resources:
     path: contrib/kserve/kserve
     kustomize:
       # replace old tensorflow
+      # https://github.com/triton-inference-server/server/releases/tag/v2.46.0
       images:
-        - >-
-          tensorflow/serving=tensorflow/serving:2.15.1
+        - tensorflow/serving:2.15.1
+        - nvcr.io/nvidia/tritonserver:24.05-py3
 
   kserveModelsWebApp:
     path: contrib/kserve/models-web-app/overlays/kubeflow
