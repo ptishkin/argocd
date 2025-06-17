@@ -34,7 +34,7 @@ resources:
       # https://github.com/triton-inference-server/server/releases/tag/v2.46.0
       images:
         - tensorflow/serving:2.15.1
-        - nvcr.io/nvidia/tritonserver:25.05-py3
+        - nvcr.io/nvidia/tritonserver:24.05-py3
 
   kserveModelsWebApp:
     path: contrib/kserve/models-web-app/overlays/kubeflow
