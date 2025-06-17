@@ -40,7 +40,7 @@ resources:
         - target:
             kind: ConfigMap
             name: inferenceservice-config
-          path: |-
+          patch: |-
             - op: replace
               path: /data/agent
               value: |-
