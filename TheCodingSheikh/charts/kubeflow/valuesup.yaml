@@ -34,7 +34,23 @@ resources:
       # https://github.com/triton-inference-server/server/releases/tag/v2.46.0
       images:
         - tensorflow/serving:2.15.1
-        - nvcr.io/nvidia/tritonserver:24.12-py3
+        - nvcr.io/nvidia/tritonserver:24.05-py3
+      patches:
+        # setup clean old revisions
+        - target:
+            kind: ConfigMap
+            name: inferenceservice-config
+          path: |-
+            - op: replace
+              path: /data/agent
+              value: |-
+                {
+                    "image" : "kserve/agent:v0.15.2",
+                    "memoryRequest": "100Mi",
+                    "memoryLimit": "1Gi",
+                    "cpuRequest": "100m",
+                    "cpuLimit": "1"
+                }
 
   kserveModelsWebApp:
     path: contrib/kserve/models-web-app/overlays/kubeflow
