@@ -49,7 +49,7 @@ resources:
               path: /data/agent
               value: |-
                 {
-                    "image" : "kserve/agent:v0.15.2",
+                    "image" : "ghcr.io/ptishkin/kserve-agent-probe/agent:latest",
                     "memoryRequest": "100Mi",
                     "memoryLimit": "1Gi",
                     "cpuRequest": "100m",
@@ -111,7 +111,6 @@ raw:
             serving.kserve.io/s3-usehttps: '0'
             serving.kserve.io/s3-region: 'minio'
             serving.kserve.io/s3-usevirtualbucket: "false"
-            serving.kserve.io/ServingReadinessProbe: '{"tcpSocket":{"port":8080,"host":"127.0.0.1"},"successThreshold":1}'
         data:
           AWS_ACCESS_KEY_ID: bWluaW8=
           AWS_SECRET_ACCESS_KEY: bWluaW8xMjM=
