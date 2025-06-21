@@ -34,7 +34,11 @@ resources:
       # https://github.com/triton-inference-server/server/releases/tag/v2.46.0
       images:
         - tensorflow/serving:2.15.1
-        - nvcr.io/nvidia/tritonserver:24.05-py3
+        #see https://docs.nvidia.com/deeplearning/frameworks/support-matrix/index.html#framework-matrix-2025__section_zz3_hdz_m1c
+        # tensoflow not supported from 25.03-py3
+        # tensorrt 8.6.1.6 https://github.com/triton-inference-server/server/releases/tag/v2.44.0 supported by
+        # kubeflownotebookswg/jupyter-tensorflow-cuda-full:latest kubeflow notebook
+        - nvcr.io/nvidia/tritonserver:24.12-py3
       patches:
         # setup clean old revisions
         - target:
@@ -107,6 +111,7 @@ raw:
             serving.kserve.io/s3-usehttps: '0'
             serving.kserve.io/s3-region: 'minio'
             serving.kserve.io/s3-usevirtualbucket: "false"
+            serving.kserve.io/ServingReadinessProbe: '{"tcpSocket":{"port":8080,"host":"127.0.0.1"},"successThreshold":1}'
         data:
           AWS_ACCESS_KEY_ID: bWluaW8=
           AWS_SECRET_ACCESS_KEY: bWluaW8xMjM=
