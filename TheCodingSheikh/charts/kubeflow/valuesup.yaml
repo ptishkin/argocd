@@ -62,7 +62,7 @@ resources:
   oauth2Proxy:
     path: common/oauth2-proxy/overlays/m2m-dex-and-kind
   pipelines:
-    repoBranchOverride: main
+    repoBranchOverride: master
     kustomize:
       # replace old minio (on 2019 - memory leaks on ubuntu 22.04)
       images:
