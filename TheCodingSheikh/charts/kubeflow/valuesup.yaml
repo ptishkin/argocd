@@ -63,6 +63,7 @@ resources:
     path: common/oauth2-proxy/overlays/m2m-dex-and-kind
   pipelines:
     repoBranchOverride: master
+    path: applications/pipeline/upstream/env/cert-manager/platform-agnostic-multi-user
     kustomize:
       # replace old minio (on 2019 - memory leaks on ubuntu 22.04)
       images:
