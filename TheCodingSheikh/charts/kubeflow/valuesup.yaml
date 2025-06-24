@@ -62,17 +62,24 @@ resources:
   oauth2Proxy:
     path: common/oauth2-proxy/overlays/m2m-dex-and-kind
   pipelines:
+    targetRevision: v1.10-branch
     kustomize:
       # replace old minio (on 2019 - memory leaks on ubuntu 22.04)
       images:
         - >-
           gcr.io/ml-pipeline/minio=quay.io/minio/minio:RELEASE.2021-12-29T06-49-06Z
       patches:
-        # open console port (web ui)
-        - target:
+        - patch: |-
+            - op: replace
+              path: /spec/template/spec/containers/0/volumeMounts
+              value:
+                - mountPath: /data
+                  name: data
+          target:
             kind: Deployment
             name: minio
-          patch: |-
+        # open console port (web ui)
+        - patch: |-
             - op: replace
               path: /spec/template/spec/containers/0/args
               value:
@@ -80,6 +87,9 @@ resources:
                 - '--console-address'
                 - ':9001'
                 - /data
+          target:
+            kind: Deployment
+            name: minio
         # apply fix https://github.com/kubeflow/pipelines/pull/11403/commits/e94d260da967d1e781b35bd076e1c61450d7b0bb
         - patch: |-
             apiVersion: apps/v1
