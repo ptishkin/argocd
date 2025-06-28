@@ -21,6 +21,7 @@ resources:
             kind: ConfigMap
             metadata:
               name: config-features
+              namespace: knative-serving
             data:
               kubernetes.podspec-nodeselector: "enabled"
 
