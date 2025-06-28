@@ -25,6 +25,8 @@ resources:
               namespace: kubeflow
             data:
               defaultTrialTemplate_patch.yaml: |-
+                apiVersion: batch/v1
+                kind: Job
                 spec:
                   template:
                     metadata:
