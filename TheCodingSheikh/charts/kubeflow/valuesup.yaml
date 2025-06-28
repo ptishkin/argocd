@@ -22,6 +22,7 @@ resources:
             kind: ConfigMap
             metadata:
               name: trial-templates
+              namespace: kubeflow
             data:
               defaultTrialTemplate.yaml: |-
                 spec:
