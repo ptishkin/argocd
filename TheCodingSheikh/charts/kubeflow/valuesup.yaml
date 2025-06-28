@@ -24,7 +24,7 @@ resources:
               name: trial-templates
               namespace: kubeflow
             data:
-              defaultTrialTemplate.yaml: |-
+              defaultTrialTemplate_patch.yaml: |-
                 spec:
                   template:
                     metadata:
