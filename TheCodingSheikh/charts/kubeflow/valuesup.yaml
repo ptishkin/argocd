@@ -15,6 +15,16 @@ resources:
   knativeServing:
     kustomize:
       patches:
+        # https://kserve.github.io/website/latest/modelserving/nodescheduling/inferenceservicenodescheduling/
+        - target:
+            kind: ConfigMap
+            name: config-features
+          patch: |-
+            - op: replace
+              path: /data
+              value:
+                kubernetes.podspec-nodeselector: "enabled"
+          
         # setup clean old revisions
         - target:
             kind: ConfigMap
