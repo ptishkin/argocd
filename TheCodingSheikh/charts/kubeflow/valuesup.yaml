@@ -34,6 +34,14 @@ resources:
                       containers:
                         - name: training-container
                           image: docker.io/kubeflowkatib/pytorch-mnist-gpu:latest
+                          command:
+                            - "python3"
+                            - "/opt/pytorch-mnist/mnist.py"
+                            - "--epochs=1"
+                            - "--batch-size=16"
+                            - "--lr=${trialParameters.learningRate}"
+                            - "--momentum=${trialParameters.momentum}"
+                      restartPolicy: Never
   knativeServing:
     kustomize:
       patches:
