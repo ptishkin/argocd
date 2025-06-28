@@ -1,4 +1,5 @@
 kubeflowManifestsRepoBranch: v1.9.1-branch
+# https://github.com/TheCodingSheikh/helm-charts/tree/main/charts/kubeflow
 resources:
   clusterLocalGateway:
     path: common/istio-1-22/cluster-local-gateway/base
@@ -12,6 +13,26 @@ resources:
     path: common/istio-1-22/kubeflow-istio-resources/base
   certManagerBase:
     path: common/cert-manager/cert-manager/base
+  katib:
+    kustomize:
+      patches:
+        # https://www.kubeflow.org/docs/components/katib/user-guides/hp-tuning/configure-experiment/ (not work with istio, use gpu)
+        - patch: |-
+            apiVersion: v1
+            kind: ConfigMap
+            metadata:
+              name: trial-templates
+            data:
+              defaultTrialTemplate.yaml: |-
+                spec:
+                  template:
+                    metadata:
+                      annotations:
+                        "sidecar.istio.io/inject": "false"
+                    spec:
+                      containers:
+                        - name: training-container
+                          image: docker.io/kubeflowkatib/pytorch-mnist-gpu:latest
   knativeServing:
     kustomize:
       patches:
