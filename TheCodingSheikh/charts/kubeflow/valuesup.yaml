@@ -19,8 +19,6 @@ resources:
     enabled: true
     repoBranchOverride: v1.10-branch
     path: apps/model-registry/upstream/options/ui/overlays/istio
-    kustomize:
-      namespace: kubeflow-user-example-com
   istioCrds:
     path: common/istio-1-22/istio-crds/base
   istioInstall:
