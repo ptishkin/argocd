@@ -4,11 +4,17 @@ resources:
   clusterLocalGateway:
     path: common/istio-1-22/cluster-local-gateway/base
   modelRegistry:
+    repoBranchOverride: v1.10-branch
     enabled: true
     path: apps/model-registry/upstream/overlays/db
   modelRegistryIstio:
     enabled: true
+    repoBranchOverride: v1.10-branch
     path: apps/model-registry/upstream/options/istio
+  modelRegistryIstioUi:
+    enabled: true
+    repoBranchOverride: v1.10-branch
+    path: apps/model-registry/upstream/options/ui/overlays/istio
   istioCrds:
     path: common/istio-1-22/istio-crds/base
   istioInstall:
