@@ -6,6 +6,9 @@ resources:
   modelRegistry:
     enabled: true
     path: apps/model-registry/upstream/overlays/db
+  modelRegistryIstio:
+    enabled: true
+    path: apps/model-registry/upstream/options/istio
   istioCrds:
     path: common/istio-1-22/istio-crds/base
   istioInstall:
