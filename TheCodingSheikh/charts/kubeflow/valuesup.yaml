@@ -3,6 +3,9 @@ kubeflowManifestsRepoBranch: v1.9.1-branch
 resources:
   clusterLocalGateway:
     path: common/istio-1-22/cluster-local-gateway/base
+  modelRegistry:
+    enabled: true
+    path: apps/model-registry/upstream/overlays/db
   istioCrds:
     path: common/istio-1-22/istio-crds/base
   istioInstall:
@@ -14,6 +17,9 @@ resources:
   certManagerBase:
     path: common/cert-manager/cert-manager/base
   katib:
+    #kuber > 1.27 .webhooks.matchConditions https://kubespec.dev/admissionregistration.k8s.io/v1/MutatingWebhookConfiguration (1.91-branch for kuber 1.26)
+    repoBranchOverride: master
+    path: applications/katib/upstream/installs/katib-with-kubeflow
     kustomize:
       patches:
         # https://www.kubeflow.org/docs/components/katib/user-guides/hp-tuning/configure-experiment/ (not work with istio, use gpu)
