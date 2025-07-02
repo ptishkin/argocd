@@ -39,6 +39,7 @@ If ignore old `rke` issuer, kuber fail to use many more internal tokens and as r
 
 ## Additionally for 1.10 version kubeflow:
 From 1.10 version Minio uses subpath from volume, but localpath is not support it, in [valuesup.yaml](https://github.com/ptishkin/kubeflow-argocd/blob/kubeflow-1.0.4-v1.10/TheCodingSheikh/charts/kubeflow/valuesup.yaml#L128) i add fix by remove subpath
+
 **For 1.10 version require kubernetes 1.28** and **enabling optional feature** https://istio.io/latest/blog/2023/native-sidecars/ in cluster config (before 1.33), like:
 ```yaml
 services:
