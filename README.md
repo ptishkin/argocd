@@ -1,4 +1,4 @@
-This repo helps to create kubeflow servvices via [Argocd](https://github.com/argoproj/argo-helm) and flow from [TheCodingSheikh](https://github.com/TheCodingSheikh/helm-charts/releases/tag/kubeflow-1.0.4) with adoption kubeflow to v1.9.1 with dex-and-kind auth
+This repo helps to create kubeflow servvices via [Argocd](https://github.com/argoproj/argo-helm) and flow from [TheCodingSheikh](https://github.com/TheCodingSheikh/helm-charts/releases/tag/kubeflow-1.0.4) with micro adoption kubeflow to v1.10 with dex-and-kind auth
 
 To create App in Argocd (must be [preinstalled](https://github.com/argoproj/argo-helm), and configured to access from [argocd cli](https://kostis-argo-cd.readthedocs.io/en/first-page/getting_started/install_cli/)), not use UI, only apply from src
 Multi source app, with values from [git]([url](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository))
@@ -36,3 +36,22 @@ services:
 ```
 `extra_args_array` required to use both `rke` and new `https://kubernetes.default.svc.cluster.local` issuers for old and new tokens
 If ignore old `rke` issuer, kuber fail to use many more internal tokens and as result cluster is not managed (but after revert old issuer cluster is ok)
+
+## Additionally for 1.10 version kubeflow:
+From 1.10 version Minio uses subpath from volume, but localpath is not support it, in [valuesup.yaml](https://github.com/ptishkin/kubeflow-argocd/blob/kubeflow-1.0.4-v1.10/TheCodingSheikh/charts/kubeflow/valuesup.yaml#L128) i add fix by remove subpath
+**For 1.10 version require kubernetes 1.28** and **enabling optional feature** https://istio.io/latest/blog/2023/native-sidecars/ in cluster config (before 1.33), like:
+```yaml
+services:
+  kube-api:
+    extra_args:
+      feature-gates: SidecarContainers=true
+  kubelet:
+    extra_args:
+      feature-gates: SidecarContainers=true
+  scheduler:
+    extra_args:
+      feature-gates: SidecarContainers=true
+  kube-controller:
+    extra_args:
+      feature-gates: SidecarContainers=true
+```
