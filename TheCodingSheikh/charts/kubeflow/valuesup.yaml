@@ -84,15 +84,12 @@ resources:
                 retain-since-last-active-time: disabled
 
         # delete non used ext domain
-        - patch: |-
-            $patch: delete
-            apiVersion: v1
+        - target:
             kind: ConfigMap
-            metadata:
-              name: config-domain
-              namespace: knative-serving
-            data:
-              example.com: ''
+            name: config-domain
+          patch: |-
+            - op: remove
+              path: /data/example.com
   kserve:
     kustomize:
       # replace old tensorflow
