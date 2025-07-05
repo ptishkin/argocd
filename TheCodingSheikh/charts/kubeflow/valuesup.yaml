@@ -109,6 +109,13 @@ resources:
                     "cpuRequest": "100m",
                     "cpuLimit": "1"
                 }
+        # delete non used ext domain
+        - target:
+            kind: ConfigMap
+            name: config-domain
+          patch: |-
+            - op: delete
+              path: /data/example.com
 
   #use local dex + external (kuber) tokens, see https://github.com/kubeflow/manifests/pull/2864
   oauth2Proxy:
