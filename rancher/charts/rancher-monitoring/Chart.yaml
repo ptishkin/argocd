@@ -11,9 +11,7 @@ home: https://github.com/ptishkin/argocd/tree/rancher/rancher/charts/rancher-mon
 maintainers:
   - name: ptishkin
 sources:
-  - repoURL: 'https://github.com/ptishkin/argocd.git'
-    targetRevision: rancher
-    path: /rancher/charts/rancher-monitoring
+  - 'https://github.com/ptishkin/argocd/tree/rancher/rancher/charts/rancher-monitoring'
 keywords:
   - ramcher_monitoring
   - argocd
