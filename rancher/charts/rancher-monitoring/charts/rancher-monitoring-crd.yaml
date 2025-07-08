@@ -20,5 +20,3 @@ spec:
     - chart: rancher-monitoring-crd
       repoURL: {{ $root.Values.rancherManifestsRepo}}
       targetRevision: {{ $root.Values.rancherManifestsRepoBranch }}
-
-{{ toYaml ($root.Values.defaultAppSpec) | indent 2 }}
