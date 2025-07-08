@@ -21,6 +21,5 @@ spec:
       repoURL: {{ $root.Values.rancherManifestsRepo}}
       targetRevision: {{ $root.Values.rancherManifestsRepoBranch }}
       name: rancher-monitoring-crd
-      annotations:
-        argocd.argoproj.io/sync-wave: "-10"
+
 {{ toYaml ($root.Values.defaultAppSpec) | indent 2 }}
