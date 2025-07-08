@@ -1,5 +1,5 @@
 apiVersion: v2
-name: rancher-monitoring
+name: rancher-monitoring-app
 description: >
   A Helm chart that includes crd & monitoring
 
