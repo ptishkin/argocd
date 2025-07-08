@@ -21,7 +21,7 @@ spec:
         valueFiles:
         - $upvalues/TheCodingSheikh/charts/kubeflow/valuesup.yaml
     # Values from Git
-    - repoURL: 'https://github.com/ptishkin/kubeflow-argocd.git'
+    - repoURL: 'https://github.com/ptishkin/argocd.git'
       targetRevision: kubeflow-1.0.4-v1.9.1
       name: custom
       ref: upvalues
