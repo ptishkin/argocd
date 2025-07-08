@@ -16,12 +16,15 @@ spec:
     - chart: rancher-monitoring-crd
       repoURL: https://charts.rancher.io/
       targetRevision: 105.2.1+up66.7.1-rancher.14
+      name: rancher-monitoring-crd
+
     - chart: rancher-monitoring
       repoURL: https://charts.rancher.io/
       targetRevision: 105.2.1+up66.7.1-rancher.14
       helm:
         valueFiles:
         - $upvalues/rancher/charts/rancher-monitoring/valuesup.yaml
+
     # Values from Git
     - repoURL: 'https://github.com/ptishkin/argocd.git'
       targetRevision: rancher
