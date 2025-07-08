@@ -17,11 +17,6 @@ spec:
       chart: rancher-monitoring
       targetRevision: 105.2.1+up66.7.1-rancher.14
       helm:
-        parameters:
-        - name: prometheus.prometheusSpec.resources.limits.cpu
-          value: 2000m
-        - name: prometheus.prometheusSpec.resources.limits.memory
-          value: 6000Mi
         valueFiles:
         - $upvalues/rancher/charts/rancher-monitoring/valuesup.yaml
     # Values from Git

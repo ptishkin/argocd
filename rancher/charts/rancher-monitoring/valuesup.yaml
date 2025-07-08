@@ -29,6 +29,13 @@ grafana:
     subPath: null
     type: statefulset
 
+prometheus:
+  prometheusSpec:
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 6000Mi
+
 # https://github.com/rancher/dashboard/blob/release-2.10/shell/chart/monitoring/ClusterSelector.vue#L68C71-L68C78
 rkeControllerManager:
   enabled: true
