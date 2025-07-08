@@ -32,3 +32,5 @@ spec:
       targetRevision: rancher
       name: custom
       ref: upvalues
+
+{{ toYaml ($root.Values.defaultAppSpec) | indent 2 }}
