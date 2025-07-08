@@ -22,8 +22,6 @@ spec:
     repoURL: {{ .Values.rancherManifestsRepo}}
     targetRevision: {{ .Values.rancherManifestsRepoBranch }}
     helm:
-      valueFiles:
-      - $upvalues/rancher/charts/rancher-monitoring/valuesup.yaml
       values: |
 {{ toYaml .Values.raw | indent 8 }}
 
