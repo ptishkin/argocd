@@ -34,4 +34,4 @@ spec:
       ref: upvalues
 
 {{- $appSpec := merge (.Values.defaultAppSpec | default (dict)) (.Values.clientAppSpec | default (dict)) }}
-{{ toYaml appSpec | indent 2 }}
+{{ toYaml $appSpec | indent 2 }}
