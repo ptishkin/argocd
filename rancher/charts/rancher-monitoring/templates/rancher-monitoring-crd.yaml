@@ -11,7 +11,7 @@ metadata:
 spec:
   destination:
     namespace: cattle-monitoring-system
-    name: in-cluster
+    name: {{ $root.Values.destinationServer }}
   project: {{ .Values.argoProjectName }}
   source:
     # Chart from Chart Repo
