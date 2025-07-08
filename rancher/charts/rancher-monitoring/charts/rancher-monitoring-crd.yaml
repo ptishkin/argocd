@@ -1,0 +1,26 @@
+{{- $root := . -}}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rancher-monitoring-crd
+  namespace: {{ $root.Values.argoNamespace }}
+{{- $annotations := merge ($root.Values.commonAppAnnotations | default (dict)) (default (dict)) }}
+{{- if $annotations }}
+  annotations:
+{{ toYaml $annotations | indent 4 }}
+{{- end }}
+spec:
+  destination:
+    namespace: cattle-monitoring-system
+    name: in-cluster
+  project: {{ $root.Values.argoProjectName }}
+  sources:
+    # Chart from Chart Repo
+    - chart: rancher-monitoring-crd
+      repoURL: {{ $root.Values.rancherManifestsRepo}}
+      targetRevision: {{ $root.Values.rancherManifestsRepoBranch }}
+      name: rancher-monitoring-crd
+      annotations:
+        argocd.argoproj.io/sync-wave: "-10"
+{{ toYaml ($root.Values.defaultAppSpec) | indent 2 }}

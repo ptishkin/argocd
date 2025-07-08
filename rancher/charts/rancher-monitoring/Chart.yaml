@@ -1,0 +1,21 @@
+apiVersion: v2
+name: rancher-monitoring
+description: >
+  A Helm chart that includes crd & monitoring
+
+type: application
+version: 1.0.0
+appVersion: "105.2.1+up66.7.1-rancher.14"
+
+home: https://github.com/ptishkin/argocd/tree/rancher/charts/rancher-monitoring
+maintainers:
+  - name: ptishkin
+sources:
+  - repoURL: 'https://github.com/ptishkin/argocd.git'
+    targetRevision: rancher
+    path: rancher/charts/rancher-monitoring
+keywords:
+  - ramcher_monitoring
+  - argocd
+  - helm
+  - gitops

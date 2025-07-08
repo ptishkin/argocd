@@ -1,0 +1,27 @@
+argoProjectName: rancher-monitoring
+argoNamespace: argocd
+commonAppAnnotations: {}
+destinationServer: https://kubernetes.default.svc
+rancherManifestsRepo: https://github.com/kubeflow/manifests
+rancherManifestsRepoBranch: 105.2.1+up66.7.1-rancher.14
+defaultAppSpec:
+  ignoreDifferences:
+  - group: argoproj.io
+    jsonPointers:
+    - /status
+    kind: Application
+  syncPolicy:
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+    retry:
+      backoff:
+        duration: 20s
+        factor: 1
+        maxDuration: 20s
+      limit: 30
+    syncOptions:
+    - ApplyOutOfSyncOnly=true
+    - ServerSideApply=true
+    - CreateNamespace=true
