@@ -3,7 +3,7 @@ This repo helps to create kubeflow servvices via [Argocd](https://github.com/arg
 To create App in Argocd (must be [preinstalled](https://github.com/argoproj/argo-helm), and configured to access from [argocd cli](https://kostis-argo-cd.readthedocs.io/en/first-page/getting_started/install_cli/)), not use UI, only apply from src
 Multi source app, with values from [git]([url](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository))
 
-`argocd app create kubeflow-1.0.4-v1.9.1 --file https://raw.githubusercontent.com/ptishkin/argocd/refs/heads/kubeflow-1.0.4-v1.9.1/TheCodingSheikh/charts/kubeflow/multi-src.yaml`
+`argocd app create kubeflow-1.0.4-v1.10 --file https://raw.githubusercontent.com/ptishkin/argocd/refs/heads/kubeflow-1.0.4-v1.10/TheCodingSheikh/charts/kubeflow/multi-src.yaml`
 
 I use `dex-and-kind` overlay ([see](https://github.com/kubeflow/manifests/pull/2864), to use both istio external and internal network (with internal (dex) and exteranl (kube) auth):
 - To extend internal to external kserve need change ConfigMap
