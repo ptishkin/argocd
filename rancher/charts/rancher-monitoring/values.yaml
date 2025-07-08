@@ -1,5 +1,5 @@
 argoProjectName: rancher-monitoring
-argoNamespace: cattle-monitoring-system
+argoNamespace: argocd
 commonAppAnnotations: {}
 destinationServer: https://kubernetes.default.svc
 rancherManifestsRepo: https://charts.rancher.io/
