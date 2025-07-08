@@ -25,3 +25,5 @@ defaultAppSpec:
     - ApplyOutOfSyncOnly=true
     - ServerSideApply=true
     - CreateNamespace=true
+
+raw: {}
