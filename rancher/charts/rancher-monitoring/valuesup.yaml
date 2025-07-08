@@ -1,0 +1,43 @@
+global:
+  cattle:
+    systemDefaultRegistry: ''
+    clusterId: ''
+    clusterName: ''
+    rkePathPrefix: ''
+    rkeWindowsPathPrefix: ''
+    systemProjectId: ''
+    url: ''
+  systemDefaultRegistry: ''
+
+prometheus:
+  prometheusSpec:
+    storageSpec:
+      disableMountSubPath: true
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 5Gi
+          storageClassName: local-path
+
+grafana:
+  persistence:
+    accessModes:
+      - ReadWriteOnce
+    enabled: true
+    size: 3Gi
+    storageClassName: local-path
+    subPath: null
+    type: statefulset
+
+# https://github.com/rancher/dashboard/blob/release-2.10/shell/chart/monitoring/ClusterSelector.vue#L68C71-L68C78
+rkeControllerManager:
+  enabled: true
+rkeEtcd:
+  enabled: true
+rkeProxy:
+  enabled: true
+rkeScheduler:
+  enabled: true

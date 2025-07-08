@@ -1,0 +1,30 @@
+#install https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd_app_create/
+#argocd app create guestbook --file <path-to-yaml-file>
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rancher-monitoring
+  namespace: cattle-monitoring-system
+spec:
+  destination:
+    namespace: kubeflow
+    name: in-cluster
+  project: kubeflow
+  #https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository
+  sources:
+    # Chart from Chart Repo
+    - repoURL: https://charts.rancher.io/
+      targetRevision: 105.2.1+up66.7.1-rancher.14
+      helm:
+        parameters:
+        - name: prometheus.prometheusSpec.resources.limits.cpu
+          value: 2000m
+        - name: prometheus.prometheusSpec.resources.limits.memory
+          value: 6000Mi
+        valueFiles:
+        - $upvalues/rancher/charts/rancher-monitoring/valuesup.yaml
+    # Values from Git
+    - repoURL: 'https://github.com/ptishkin/argocd.git'
+      targetRevision: rancher-monitoring
+      name: custom
+      ref: upvalues
