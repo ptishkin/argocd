@@ -4,7 +4,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: rancher-monitoring
-  namespace: cattle-monitoring-system
+  namespace: argocd
 spec:
   destination:
     namespace: cattle-monitoring-system
@@ -14,6 +14,7 @@ spec:
   sources:
     # Chart from Chart Repo
     - repoURL: https://charts.rancher.io/
+      chart: rancher-monitoring
       targetRevision: 105.2.1+up66.7.1-rancher.14
       helm:
         parameters:
@@ -25,6 +26,6 @@ spec:
         - $upvalues/rancher/charts/rancher-monitoring/valuesup.yaml
     # Values from Git
     - repoURL: 'https://github.com/ptishkin/argocd.git'
-      targetRevision: rancher-monitoring
+      targetRevision: rancher
       name: custom
       ref: upvalues
