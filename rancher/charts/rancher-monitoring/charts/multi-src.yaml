@@ -17,6 +17,8 @@ spec:
       repoURL: https://charts.rancher.io/
       targetRevision: 105.2.1+up66.7.1-rancher.14
       name: rancher-monitoring-crd
+      annotations:
+        argocd.argoproj.io/sync-wave: "-10"
 
     - chart: rancher-monitoring
       repoURL: https://charts.rancher.io/
