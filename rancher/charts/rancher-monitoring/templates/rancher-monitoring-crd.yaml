@@ -13,10 +13,10 @@ spec:
     namespace: cattle-monitoring-system
     name: in-cluster
   project: {{ .Values.argoProjectName }}
-  sources:
+  source:
     # Chart from Chart Repo
-    - chart: rancher-monitoring-crd
-      repoURL: {{ .Values.rancherManifestsRepo}}
-      targetRevision: {{ .Values.rancherManifestsRepoBranch }}
+    chart: rancher-monitoring-crd
+    repoURL: {{ .Values.rancherManifestsRepo}}
+    targetRevision: {{ .Values.rancherManifestsRepoBranch }}
 
 {{ toYaml .Values.defaultAppSpec | indent 2 }}
