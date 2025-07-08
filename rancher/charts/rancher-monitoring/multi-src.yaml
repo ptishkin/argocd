@@ -14,6 +14,9 @@ spec:
   sources:
     # Chart from Chart Repo
     - repoURL: https://charts.rancher.io/
+      chart: rancher-monitoring-crd
+      targetRevision: 105.2.1+up66.7.1-rancher.14
+    - repoURL: https://charts.rancher.io/
       chart: rancher-monitoring
       targetRevision: 105.2.1+up66.7.1-rancher.14
       helm:
