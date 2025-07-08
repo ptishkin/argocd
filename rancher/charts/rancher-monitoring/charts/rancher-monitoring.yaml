@@ -1,13 +1,11 @@
 #install https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd_app_create/
 #argocd app create guestbook --file <path-to-yaml-file>
-{{- $root := . -}}
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: rancher-monitoring
-  namespace: {{ $root.Values.argoNamespace }}
-{{- $annotations := merge ($root.Values.commonAppAnnotations | default (dict)) (default (dict)) }}
+  namespace: {{ .Values.argoNamespace }}
+{{- $annotations := merge (.Values.commonAppAnnotations | default (dict)) (default (dict)) }}
 {{- if $annotations }}
   annotations:
 {{ toYaml $annotations | indent 4 }}
@@ -16,13 +14,13 @@ spec:
   destination:
     namespace: cattle-monitoring-system
     name: in-cluster
-  project: {{ $root.Values.argoProjectName }}
+  project: {{ .Values.argoProjectName }}
   #https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository
   sources:
     # Chart from Chart Repo
     - chart: rancher-monitoring
-      repoURL: {{ $root.Values.rancherManifestsRepo}}
-      targetRevision: {{ $root.Values.rancherManifestsRepoBranch }}
+      repoURL: {{ .Values.rancherManifestsRepo}}
+      targetRevision: {{ .Values.rancherManifestsRepoBranch }}
       helm:
         valueFiles:
         - $upvalues/rancher/charts/rancher-monitoring/valuesup.yaml
@@ -32,5 +30,4 @@ spec:
       targetRevision: rancher
       name: custom
       ref: upvalues
-
-{{ toYaml ($root.Values.defaultAppSpec) | indent 2 }}
+{{ toYaml .Values.defaultAppSpec | indent 2 }}
