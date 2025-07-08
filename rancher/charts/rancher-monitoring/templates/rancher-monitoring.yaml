@@ -25,7 +25,7 @@ spec:
         valueFiles:
         - $upvalues/rancher/charts/rancher-monitoring/valuesup.yaml
         values: |
-{{ toYaml .Values.raw | indent 8 }}
+{{ toYaml .Values.raw | indent 10 }}
 
     # Values from Git
     - repoURL: 'https://github.com/ptishkin/argocd.git'

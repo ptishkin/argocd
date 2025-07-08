@@ -25,5 +25,12 @@ defaultAppSpec:
     - ApplyOutOfSyncOnly=true
     - ServerSideApply=true
     - CreateNamespace=true
+
 raw:
-  resources: {}
+  global:
+    cattle:
+      systemDefaultRegistry: ''
+      clusterId: ''
+      clusterName: ''
+      systemProjectId: ''
+      url: ''
