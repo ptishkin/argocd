@@ -24,7 +24,7 @@ spec:
       helm:
         valueFiles:
         - $upvalues/rancher/charts/rancher-monitoring/valuesup.yaml
-        values: |
+        values:
         {{ toYaml .Values.raw | indent 8 }}
 
     # Values from Git
