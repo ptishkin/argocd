@@ -3,11 +3,8 @@ global:
     systemDefaultRegistry: ''
     clusterId: ''
     clusterName: ''
-    rkePathPrefix: ''
-    rkeWindowsPathPrefix: ''
     systemProjectId: ''
     url: ''
-  systemDefaultRegistry: ''
 
 prometheus:
   prometheusSpec:
