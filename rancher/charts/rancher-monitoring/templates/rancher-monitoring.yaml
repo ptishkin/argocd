@@ -21,22 +21,22 @@ spec:
     chart: rancher-monitoring
     repoURL: {{ .Values.rancherManifestsRepo}}
     targetRevision: {{ .Values.rancherManifestsRepoBranch }}
-    parameters:
-      - name: prometheus.prometheusSpec.resources.limits.cpu
-        value: 2000m
-      - name: prometheus.prometheusSpec.resources.limits.memory
-        value: 6000Mi
-      
-      # https://github.com/rancher/dashboard/blob/release-2.10/shell/chart/monitoring/ClusterSelector.vue#L68C71-L68C78
-      - name: rkeControllerManager.enabled
-        value: true
-      - name: rkeEtcd.enabled
-        value: true
-      - name: rkeProxy.enabled
-        value: true
-      - name: rkeScheduler.enabled
-        value: true
     helm:
+      parameters:
+        - name: prometheus.prometheusSpec.resources.limits.cpu
+          value: 2000m
+        - name: prometheus.prometheusSpec.resources.limits.memory
+          value: 6000Mi
+        
+        # https://github.com/rancher/dashboard/blob/release-2.10/shell/chart/monitoring/ClusterSelector.vue#L68C71-L68C78
+        - name: rkeControllerManager.enabled
+          value: true
+        - name: rkeEtcd.enabled
+          value: true
+        - name: rkeProxy.enabled
+          value: true
+        - name: rkeScheduler.enabled
+          value: true
       values: |
 {{ toYaml .Values.raw | indent 8 }}
 
