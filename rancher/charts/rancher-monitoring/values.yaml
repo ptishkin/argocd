@@ -29,7 +29,9 @@ defaultAppSpec:
 clientAppSpec:
   syncPolicy:
     syncOptions:
+    - ApplyOutOfSyncOnly=true
     - ServerSideApply=false
+    - CreateNamespace=true
 
 raw:
   global:
