@@ -4,7 +4,6 @@ commonAppAnnotations: {}
 destinationServer: https://kubernetes.default.svc
 rancherManifestsRepo: https://charts.rancher.io/
 rancherManifestsRepoBranch: 105.2.1+up66.7.1-rancher.14
-raw: {}
 defaultAppSpec:
   ignoreDifferences:
   - group: argoproj.io
@@ -26,3 +25,5 @@ defaultAppSpec:
     - ApplyOutOfSyncOnly=true
     - ServerSideApply=true
     - CreateNamespace=true
+raw:
+  resources: {}
