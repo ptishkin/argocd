@@ -26,6 +26,11 @@ defaultAppSpec:
     - ServerSideApply=true
     - CreateNamespace=true
 
+clientAppSpec:
+  syncPolicy:
+    syncOptions:
+    - ServerSideApply=false
+
 raw:
   global:
     cattle:

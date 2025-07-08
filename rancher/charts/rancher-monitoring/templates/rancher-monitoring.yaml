@@ -33,5 +33,5 @@ spec:
       name: custom
       ref: upvalues
 
-{{- $appSpec := merge (.Values.defaultAppSpec | default (dict)) (.Values.clientAppSpec | default (dict)) }}
+{{- $appSpec := mergeOverwrite (.Values.defaultAppSpec | default (dict)) (.Values.clientAppSpec | default (dict)) }}
 {{ toYaml $appSpec | indent 2 }}
