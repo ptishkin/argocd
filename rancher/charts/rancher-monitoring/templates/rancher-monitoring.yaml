@@ -32,4 +32,6 @@ spec:
       targetRevision: rancher
       name: custom
       ref: upvalues
-{{ toYaml .Values.defaultAppSpec | indent 2 }}
+
+{{- $appSpec := merge (.Values.defaultAppSpec | default (dict)) (.Values.clientAppSpec | default (dict)) }}
+{{ toYaml appSpec | indent 2 }}
