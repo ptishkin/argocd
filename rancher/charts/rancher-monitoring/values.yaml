@@ -42,12 +42,9 @@ raw:
       clusterName: ''
       systemProjectId: ''
       url: ''
+
   prometheus:
     prometheusSpec:
-      resources:
-        limits:
-          cpu: 2000m
-          memory: 6000Mi
       storageSpec:
         disableMountSubPath: true
         volumeClaimTemplate:
@@ -68,13 +65,3 @@ raw:
       storageClassName: local-path
       subPath: null
       type: statefulset
-
-  # https://github.com/rancher/dashboard/blob/release-2.10/shell/chart/monitoring/ClusterSelector.vue#L68C71-L68C78
-  rkeControllerManager:
-    enabled: true
-  rkeEtcd:
-    enabled: true
-  rkeProxy:
-    enabled: true
-  rkeScheduler:
-    enabled: true
