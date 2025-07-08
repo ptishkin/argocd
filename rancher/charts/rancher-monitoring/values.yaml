@@ -4,6 +4,7 @@ commonAppAnnotations: {}
 destinationServer: https://kubernetes.default.svc
 rancherManifestsRepo: https://charts.rancher.io/
 rancherManifestsRepoBranch: 105.2.1+up66.7.1-rancher.14
+
 defaultAppSpec:
   ignoreDifferences:
   - group: argoproj.io
