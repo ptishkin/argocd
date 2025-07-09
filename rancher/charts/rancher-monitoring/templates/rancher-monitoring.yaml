@@ -5,6 +5,8 @@ kind: Application
 metadata:
   name: rancher-monitoring
   namespace: {{ .Values.argoNamespace }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 {{- $labels := merge (.Values.commonAppLabels | default (dict)) (default (dict)) }}
   {{- if $labels }}
   labels: 

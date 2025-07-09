@@ -3,6 +3,8 @@ kind: AppProject
 metadata:
   name: {{ .Values.argoProjectName }}
   namespace: {{ .Values.argoNamespace }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:
   clusterResourceWhitelist:
     - group: "*"
