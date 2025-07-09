@@ -27,6 +27,7 @@ defaultAppSpec:
     - ApplyOutOfSyncOnly=true
     - ServerSideApply=true
     - CreateNamespace=true
+    - Prune=true
 
 clientAppSpec:
   syncPolicy:
@@ -34,6 +35,7 @@ clientAppSpec:
     - ApplyOutOfSyncOnly=true
     - ServerSideApply=false
     - CreateNamespace=true
+    - Prune=true
 
 raw:
   global:
