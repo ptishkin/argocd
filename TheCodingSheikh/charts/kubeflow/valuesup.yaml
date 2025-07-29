@@ -1,6 +1,16 @@
 kubeflowManifestsRepoBranch: v1.10-branch
 # https://github.com/TheCodingSheikh/helm-charts/tree/main/charts/kubeflow
 resources:
+  istioCrds:
+    path: common/istio/istio-crds/base
+  istioNamespace:
+    path: common/istio/istio-namespace/base
+  istioInstall:
+    path: common/istio/istio-install/overlays/oauth2-proxy
+  clusterLocalGateway:
+    path: common/istio/cluster-local-gateway/base
+  istioResources:
+    path: common/istio/kubeflow-istio-resources/base
   modelRegistry:
     enabled: true
     path: apps/model-registry/upstream/overlays/db
