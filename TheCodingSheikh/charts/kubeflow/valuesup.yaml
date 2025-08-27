@@ -13,17 +13,17 @@ resources:
     path: common/istio/kubeflow-istio-resources/base
   modelRegistry:
     enabled: true
-    path: apps/model-registry/upstream/overlays/db
+    path: applications/model-registry/upstream/overlays/db
     kustomize:
       namespace: kubeflow-user-example-com
   modelRegistryIstio:
     enabled: true
-    path: apps/model-registry/upstream/options/istio
+    path: applications/model-registry/upstream/options/istio
     kustomize:
       namespace: kubeflow-user-example-com
   modelRegistryIstioUi:
     enabled: true
-    path: apps/model-registry/upstream/options/ui/overlays/istio
+    path: applications/model-registry/upstream/options/ui/overlays/istio
   katib:
     #kuber > 1.27 .webhooks.matchConditions https://kubespec.dev/admissionregistration.k8s.io/v1/MutatingWebhookConfiguration (1.91-branch for kuber 1.26)
     repoBranchOverride: master
@@ -101,6 +101,7 @@ resources:
             - op: remove
               path: /data/example.com
   kserve:
+    path: applications/kserve/kserve
     kustomize:
       # replace old tensorflow
       # https://github.com/triton-inference-server/server/releases/tag/v2.46.0
