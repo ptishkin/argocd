@@ -24,6 +24,29 @@ resources:
   modelRegistryIstioUi:
     enabled: true
     path: applications/model-registry/upstream/options/ui/overlays/istio
+  centralDashboard:
+    path: applications/centraldashboard/overlays/oauth2-proxy
+  admissionWebhook:
+    path: applications/admission-webhook/upstream/overlays/cert-manager
+  jupyterWebApp:
+    path: applications/jupyter/jupyter-web-app/upstream/overlays/istio
+  notebookController:
+    path: applications/jupyter/notebook-controller/upstream/overlays/kubeflow
+  profiles:
+    path: applications/profiles/upstream/overlays/kubeflow
+  pvcViewer:
+    path: applications/pvcviewer-controller/upstream/base
+  volumesWebApp:
+    path: applications/volumes-web-app/upstream/overlays/istio
+  tensorboardController:
+    path: applications/tensorboard/tensorboard-controller/upstream/overlays/kubeflow
+  tensorboardsWebApp:
+    path: applications/tensorboard/tensorboards-web-app/upstream/overlays/istio
+  trainingOperator:
+    path: applications/training-operator/upstream/overlays/kubeflow
+  kserveModelsWebApp:
+    path: applications/kserve/models-web-app/overlays/kubeflow
+  
   katib:
     #kuber > 1.27 .webhooks.matchConditions https://kubespec.dev/admissionregistration.k8s.io/v1/MutatingWebhookConfiguration (1.91-branch for kuber 1.26)
     repoBranchOverride: master
