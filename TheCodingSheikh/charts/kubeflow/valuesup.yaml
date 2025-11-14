@@ -162,7 +162,7 @@ resources:
       # replace old minio (on 2019 - memory leaks on ubuntu 22.04)
       images:
         - >-
-          gcr.io/ml-pipeline/minio=quay.io/minio/minio:RELEASE.2021-12-29T06-49-06Z
+          minio/minio=quay.io/minio/minio:RELEASE.2021-12-29T06-49-06Z
       patches:
         - patch: |-
             - op: replace
