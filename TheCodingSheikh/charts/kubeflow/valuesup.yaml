@@ -155,6 +155,9 @@ resources:
   #use local dex + external (kuber) tokens, see https://github.com/kubeflow/manifests/pull/2864
   oauth2Proxy:
     path: common/oauth2-proxy/overlays/m2m-dex-and-kind
+    kustomize:
+      images:
+        - docker.io/bitnami/kubectl=bitnamisecure/kubectl:latest
   pipelines:
     repoBranchOverride: v1.10-branch
     path: applications/pipeline/upstream/env/cert-manager/platform-agnostic-multi-user
