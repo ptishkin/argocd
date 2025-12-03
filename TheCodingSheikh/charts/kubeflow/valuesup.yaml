@@ -173,6 +173,7 @@ resources:
                 - '--datadir'
                 - /var/lib/mysql
                 - '--disable-log-bin'
+                - --mysql-native-password=ON
           target:
             kind: Deployment
             name: mysql
