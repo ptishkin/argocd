@@ -2,14 +2,19 @@ kubeflowManifestsRepoBranch: v1.10-branch
 # https://github.com/TheCodingSheikh/helm-charts/tree/main/charts/kubeflow
 resources:
   istioCrds:
+    repoBranchOverride: v1.11-branch
     path: common/istio/istio-crds/base
   istioNamespace:
+    repoBranchOverride: v1.11-branch
     path: common/istio/istio-namespace/base
   istioInstall:
-    path: common/istio/istio-install/overlays/oauth2-proxy
+    repoBranchOverride: v1.11-branch
+    path: common/istio/istio-install/overlays/ambient-oauth2-proxy
   clusterLocalGateway:
+    repoBranchOverride: v1.11-branch
     path: common/istio/cluster-local-gateway/base
   istioResources:
+    repoBranchOverride: v1.11-branch
     path: common/istio/kubeflow-istio-resources/base
   modelRegistry:
     enabled: true
