@@ -5,6 +5,7 @@ resources:
     repoBranchOverride: v1.11-branch
     path: common/istio/istio-crds/base
   istioNamespace:
+    enabled: false
     repoBranchOverride: v1.11-branch
     path: common/istio/istio-namespace/base
   istioInstall:
