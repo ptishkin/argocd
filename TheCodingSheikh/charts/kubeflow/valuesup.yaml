@@ -30,6 +30,9 @@ resources:
   modelRegistryIstioUi:
     enabled: true
     path: applications/model-registry/upstream/options/ui/overlays/istio
+  namespace:
+    enabled: false
+    path: common/kubeflow-namespace/base
   centralDashboard:
     path: applications/centraldashboard/overlays/oauth2-proxy
   admissionWebhook:
