@@ -102,6 +102,7 @@ resources:
               namespace: knative-serving
             data:
               kubernetes.podspec-nodeselector: "enabled"
+              kubernetes.podspec-init-containers: "enabled"
         # https://kserve.github.io/website/0.15/modelserving/v1beta1/triton/bert/#setup
         - patch: |-
             apiVersion: v1
