@@ -22,18 +22,18 @@ resources:
     path: applications/model-registry/upstream/overlays/db
     kustomize:
       namespace: kubeflow-user-example-com
-      patches:
-        # rename port for ambient
-        - target:
-            kind: Service
-            name: model-registry-db
-          patch: |-
-            - op: replace
-              path: /spec/ports
-              value:
-                - port: 3306
-                  protocol: TCP
-                  name: tcp-dbapi
+      # patches:
+      #   # rename port for ambient
+      #   - target:
+      #       kind: Service
+      #       name: model-registry-db
+      #     patch: |-
+      #       - op: replace
+      #         path: /spec/ports
+      #         value:
+      #           - port: 3306
+      #             protocol: TCP
+      #             name: tcp-dbapi
   modelRegistryIstio:
     enabled: true
     path: applications/model-registry/upstream/options/istio
