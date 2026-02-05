@@ -161,6 +161,23 @@ resources:
                     "cpuRequest": "100m",
                     "cpuLimit": "1"
                 }
+            - op: replace
+              path: /data/storageInitializer
+              value: |-
+                {
+                    "image" : "kserve/storage-initializer:v0.15.0",
+                    "memoryRequest": "100Mi",
+                    "memoryLimit": "1Gi",
+                    "cpuRequest": "100m",
+                    "cpuLimit": "1",
+                    "caBundleConfigMapName": "cabundle",
+                    "caBundleVolumeMountPath": "/etc/ssl/custom-certs",
+                    "enableDirectPvcVolumeMount": true,
+                    "enableModelcar": false,
+                    "cpuModelcar": "10m",
+                    "memoryModelcar": "15Mi"
+                }
+            
 
   #use local dex + external (kuber) tokens, see https://github.com/kubeflow/manifests/pull/2864
   oauth2Proxy:
