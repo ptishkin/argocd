@@ -133,6 +133,26 @@ resources:
           patch: |-
             - op: remove
               path: /data/example.com
+
+      - patch: |-
+          - op: remove
+            path: /metadata/labels/istio-injection
+        target:
+          kind: Namespace
+      - patch: |-
+          - op: remove
+            path: /metadata/labels/istio-injection
+          - op: add
+            path: /metadata/labels/istio.io~1dataplane-mode
+            value: ambient
+        target:
+          kind: Namespace
+          name: knative-serving
+      - patch: |-
+          - op: remove
+            path: /spec/template/metadata/labels/sidecar.istio.io~1inject
+        target:
+          kind: Deployment
   kserve:
     path: applications/kserve/kserve
     kustomize:
