@@ -1,61 +1,28 @@
 kubeflowManifestsRepoBranch: v1.10-branch
 # https://github.com/TheCodingSheikh/helm-charts/tree/main/charts/kubeflow
 resources:
+  admissionWebhook:
+    path: applications/admission-webhook/upstream/overlays/cert-manager
+  centralDashboard:
+    path: applications/centraldashboard/overlays/oauth2-proxy
+  clusterLocalGateway:
+    repoBranchOverride: v1.11-branch
+    path: common/istio/cluster-local-gateway/base
   istioCrds:
     repoBranchOverride: v1.11-branch
     path: common/istio/istio-crds/base
+  istioInstall:
+    repoBranchOverride: v1.11-branch
+    path: common/istio/istio-install/overlays/ambient-oauth2-proxy
   istioNamespace:
     enabled: false
     repoBranchOverride: v1.11-branch
     path: common/istio/istio-namespace/base
-  istioInstall:
-    repoBranchOverride: v1.11-branch
-    path: common/istio/istio-install/overlays/ambient-oauth2-proxy
-  clusterLocalGateway:
-    repoBranchOverride: v1.11-branch
-    path: common/istio/cluster-local-gateway/base
   istioResources:
     repoBranchOverride: v1.11-branch
     path: common/istio/kubeflow-istio-resources/base
-  modelRegistry:
-    enabled: true
-    path: applications/model-registry/upstream/overlays/db
-    kustomize:
-      namespace: kubeflow-user-example-com
-  modelRegistryIstio:
-    enabled: true
-    path: applications/model-registry/upstream/options/istio
-    kustomize:
-      namespace: kubeflow-user-example-com
-  modelRegistryIstioUi:
-    enabled: true
-    path: applications/model-registry/upstream/options/ui/overlays/istio
-  namespace:
-    enabled: false
-    path: common/kubeflow-namespace/base
-  centralDashboard:
-    path: applications/centraldashboard/overlays/oauth2-proxy
-  admissionWebhook:
-    path: applications/admission-webhook/upstream/overlays/cert-manager
   jupyterWebApp:
     path: applications/jupyter/jupyter-web-app/upstream/overlays/istio
-  notebookController:
-    path: applications/jupyter/notebook-controller/upstream/overlays/kubeflow
-  profiles:
-    path: applications/profiles/upstream/overlays/kubeflow
-  pvcViewer:
-    path: applications/pvcviewer-controller/upstream/base
-  volumesWebApp:
-    path: applications/volumes-web-app/upstream/overlays/istio
-  tensorboardController:
-    path: applications/tensorboard/tensorboard-controller/upstream/overlays/kubeflow
-  tensorboardsWebApp:
-    path: applications/tensorboard/tensorboards-web-app/upstream/overlays/istio
-  trainingOperator:
-    path: applications/training-operator/upstream/overlays/kubeflow
-  kserveModelsWebApp:
-    path: applications/kserve/models-web-app/overlays/kubeflow
-  
   katib:
     #kuber > 1.27 .webhooks.matchConditions https://kubespec.dev/admissionregistration.k8s.io/v1/MutatingWebhookConfiguration (1.91-branch for kuber 1.26)
     repoBranchOverride: master
@@ -134,25 +101,25 @@ resources:
             - op: remove
               path: /data/example.com
 
-      - patch: |-
-          - op: remove
-            path: /metadata/labels/istio-injection
-        target:
-          kind: Namespace
-      - patch: |-
-          - op: remove
-            path: /metadata/labels/istio-injection
-          - op: add
-            path: /metadata/labels/istio.io~1dataplane-mode
-            value: ambient
-        target:
-          kind: Namespace
-          name: knative-serving
-      - patch: |-
-          - op: remove
-            path: /spec/template/metadata/labels/sidecar.istio.io~1inject
-        target:
-          kind: Deployment
+        - patch: |-
+            - op: remove
+              path: /metadata/labels/istio-injection
+          target:
+            kind: Namespace
+        - patch: |-
+            - op: remove
+              path: /metadata/labels/istio-injection
+            - op: add
+              path: /metadata/labels/istio.io~1dataplane-mode
+              value: ambient
+          target:
+            kind: Namespace
+            name: knative-serving
+        - patch: |-
+            - op: remove
+              path: /spec/template/metadata/labels/sidecar.istio.io~1inject
+          target:
+            kind: Deployment
   kserve:
     path: applications/kserve/kserve
     kustomize:
@@ -197,8 +164,26 @@ resources:
                     "cpuModelcar": "10m",
                     "memoryModelcar": "15Mi"
                 }
-            
-
+  kserveModelsWebApp:
+    path: applications/kserve/models-web-app/overlays/kubeflow
+  modelRegistry:
+    enabled: true
+    path: applications/model-registry/upstream/overlays/db
+    kustomize:
+      namespace: kubeflow-user-example-com
+  modelRegistryIstio:
+    enabled: true
+    path: applications/model-registry/upstream/options/istio
+    kustomize:
+      namespace: kubeflow-user-example-com
+  modelRegistryIstioUi:
+    enabled: true
+    path: applications/model-registry/upstream/options/ui/overlays/istio
+  namespace:
+    enabled: false
+    path: common/kubeflow-namespace/base
+  notebookController:
+    path: applications/jupyter/notebook-controller/upstream/overlays/kubeflow
   #use local dex + external (kuber) tokens, see https://github.com/kubeflow/manifests/pull/2864
   oauth2Proxy:
     path: common/oauth2-proxy/overlays/m2m-dex-and-kind
@@ -262,7 +247,18 @@ resources:
                     env:
                       - name: DISABLE_GKE_METADATA
                         value: 'true'
-
+  profiles:
+    path: applications/profiles/upstream/overlays/kubeflow
+  pvcViewer:
+    path: applications/pvcviewer-controller/upstream/base
+  tensorboardController:
+    path: applications/tensorboard/tensorboard-controller/upstream/overlays/kubeflow
+  tensorboardsWebApp:
+    path: applications/tensorboard/tensorboards-web-app/upstream/overlays/istio
+  trainingOperator:
+    path: applications/training-operator/upstream/overlays/kubeflow
+  volumesWebApp:
+    path: applications/volumes-web-app/upstream/overlays/istio
 raw:
   resources:
     minio-kserve-tensorboard-secret:
